@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const copyButton = document.getElementById("copyButton");
   const outputContainer = document.getElementById("outputContainer");
   const participantsList = document.getElementById("participantsList");
+  const languageDropdown = document.getElementById("languageDropdown");
 
   const codeEditor = document.getElementById("code-editor");
 
