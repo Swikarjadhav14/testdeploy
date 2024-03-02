@@ -1,23 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
   const socket = io();
-  const textBox = document.getElementById("textBox");
   const copyButton = document.getElementById("copyButton");
   const outputContainer = document.getElementById("outputContainer");
   const participantsList = document.getElementById("participantsList");
   const languageDropdown = document.getElementById("languageDropdown");
 
   const codeEditor = document.getElementById("code-editor");
+  let languageId;
 
   const userName = prompt("Enter your name:");
   const roomId = window.location.pathname.substring(1);  // assuming room ID is part of the URL path
 
   socket.emit("joinRoom", roomId, userName);
 
-  socket.on("participants", (participants) => {
-    const participantsListElement =
-      document.getElementById("participants-list");
+  socket.on("updateParticipants", (participants) => {
+    const participantsListElement = document.getElementById("participants-list");
     participantsListElement.innerHTML = "";
-
+  
     participants.forEach((participant) => {
       const listItem = document.createElement("li");
       listItem.textContent = participant.name;
@@ -34,14 +33,14 @@ document.addEventListener("DOMContentLoaded", function () {
   codeEditor.addEventListener("input", () => {
     socket.emit("textUpdate", codeEditor.value);
   });
-
   copyButton.addEventListener("click", () => {
-    const codeText = textBox.value;
+    codeText = codeEditor.value;
     executeCode(codeText);
   });
 
   languageDropdown.addEventListener("change", () => {
     languageId = languageDropdown.value;
+    console.log(languageId);
   });
 
   function executeCode(codeText) {
@@ -75,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": "d2363ee1eemsh564d4440e837613p186891jsn28fce3492eec",
+        "X-RapidAPI-Key": "b18550a92dmshaf84c14d5e4596ep1fb318jsnfda795c172cd",
         "X-RapidAPI-Host": "judge0-extra-ce.p.rapidapi.com",
       },
       processData: false,
