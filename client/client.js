@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const socket = io();
+  const socket = io('https://testdeploy-dw6v.onrender.com/');
   const textBox = document.getElementById("textBox");
   const copyButton = document.getElementById("copyButton");
   const outputContainer = document.getElementById("outputContainer");
