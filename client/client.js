@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": "d57e982ca9msh6b2b2958231b232p17e730jsn94a853cf40a5",
+        "X-RapidAPI-Key": "d2363ee1eemsh564d4440e837613p186891jsn28fce3492eec",
         "X-RapidAPI-Host": "judge0-extra-ce.p.rapidapi.com",
       },
       processData: false,
