@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
       roomId: roomId,
     };
 
-    io.emit("participants", Object.values(participants));
+    io.emit("participants", roomParticipantsMap[roomId]);
   });
 
   socket.on("textUpdate", (text) => {
