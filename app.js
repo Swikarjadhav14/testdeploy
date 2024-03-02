@@ -1,5 +1,4 @@
 // server.js
-require('dotenv').config()
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
@@ -9,7 +8,9 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-const roomParticipantsMap = {}; // Updated to store participants per room
+const participants = {};
+const roomSocketMap = {};
+const roomParticipantsMap = {};
 
 app.use(express.static(path.join(__dirname, "client")));
 
@@ -27,39 +28,37 @@ io.on("connection", (socket) => {
 
   socket.on("joinRoom", (roomId, userName) => {
     socket.join(roomId);
-  
+
     if (!roomParticipantsMap[roomId]) {
       roomParticipantsMap[roomId] = [];
     }
-  
-    const participant = {
+    roomParticipantsMap[roomId].push({
+      id: socket.id,
+      name: userName,
+    });
+
+    io.to(roomId).emit("updateParticipants", roomParticipantsMap[roomId]);
+
+    roomSocketMap[socket.id] = roomId;
+
+    participants[socket.id] = {
       id: socket.id,
       name: userName,
       roomId: roomId,
     };
-  
-    roomParticipantsMap[roomId].push(participant);
-  
-    console.log(`User ${userName} joined room ${roomId}`);
-  
-    // Sending participants to everyone in the room
-    io.to(roomId).emit("participants", roomParticipantsMap[roomId]);
-  
-    // Sending participants to the joined user
-    socket.emit("participants", roomParticipantsMap[roomId]);
-  
-    // Sending participants to others in the room
-    socket.to(roomId).emit("updateParticipants", roomParticipantsMap[roomId]);
+
+    io.emit("participants", Object.values(participants));
   });
 
-
   socket.on("textUpdate", (text) => {
-    const roomId = Object.keys(socket.rooms).filter(item => item !== socket.id)[0]; // Get the room ID
+    const roomId = roomSocketMap[socket.id];
     io.to(roomId).emit("textUpdate", { id: socket.id, text });
   });
 
   socket.on("disconnect", () => {
-    const roomId = Object.keys(socket.rooms).filter(item => item !== socket.id)[0]; // Get the room ID
+    console.log("User disconnected");
+
+    const roomId = roomSocketMap[socket.id];
 
     if (roomId && roomParticipantsMap[roomId]) {
       roomParticipantsMap[roomId] = roomParticipantsMap[roomId].filter(
@@ -67,6 +66,11 @@ io.on("connection", (socket) => {
       );
       io.to(roomId).emit("updateParticipants", roomParticipantsMap[roomId]);
     }
+
+    delete participants[socket.id];
+    io.emit("participants", Object.values(participants));
+
+    delete roomSocketMap[socket.id];
   });
 });
 
