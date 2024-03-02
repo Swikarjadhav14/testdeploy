@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>CodeSync</title>
+            <link rel="stylesheet" href="style.css">
+            <script src="client.js"></script>
+</head>
+<body>    
+  <div class  = "sak">
+    <div class="image-container">
+        <div class="overlay-text">Code</div>
+        <div class="logo">@</div>
+        <div class="yellow">Sync</div>
+        <div class="code">Code</div>
+        <div class="compile">Compile</div>
+        <div class="collab">Collaborate</div>
+   </div>
+   <div class="text">
+      <h3>
+          Create rooms. call your friends. Sip Chai, Chat, Create and
+          <br>
+          Code. A coding platform to code simultaneously with 
+          <br>
+          your friends and design your algorithms on CodeSync,
+      </h3>
+      <h2>
+          And you know what's best part?...    It's Free.
+      </h2>
+    </div>
+    <div class = "button">
+      <button id="myButton">Start collaboration</button>
+    </div>
+
+    <div id="signInPopup" class="popup">
+      <div class="popup-content">
+          <span class="close" onclick="closePopup()">&times;</span>
+          <!-- Your sign-in form goes here -->
+          <form id="loginForm" ; return false;">
+            <label for="roomId">roomId:</label>
+            <input type="text" id="roomId" name="roomId" required>
+            <a href="#" id="generateRoomId" onclick="generateRoomId()">Generate Room ID</a>
+    
+            <button type="submit">Join room</button>
+        </form>
+      </div>
+  </div>
+
+  </div>
+
+  <div class="top-right-links">
+    <a href="#">Practice</a>
+    <a href="#">Resources</a>
+    <a href="#">Companies</a>
+    <a href="/join-room">Sign Up</a>
+  </div> 
+            
+  <div class="image">
+    <img alt="demo" src="https://d2yjqys1j7uhg1.cloudfront.net/images/graphics/collab-ide-ss.png">
+  </div>
+
+  <div class="wrapper">
+    <div class="section">
+      <div class="content">
+        <div class="item">
+          <h2 class="heading">Interview Candidates</h2>
+          <p class="item-desc">Present the candidate with a problem and observe how they code for it in real time. Execute code to check for correctness.</p>
+        </div>
+        <div class="item">
+          <h2 class="heading">Code With Peers</h2>
+          <p class="item-desc">Collaboration in the new remote world doesn't have to be a pain. Pair program with your teammates and debug issues together.</p>
+        </div>
+        <div class="item">
+          <h2 class="heading">Teach Someone To Code</h2>
+          <p class="item-desc">Share document with your students so that you can work with them collaboratively and they learn by doing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lang-wrapper">
+    <div class="section">
+      <div class="lang-content">
+        <div class="lang-item" role="button">
+          <img src="https://d2yjqys1j7uhg1.cloudfront.net/images/language-icons/logos/c.svg" alt="" class="item-icon">
+          <h3>C Language</h3>
+        </div>
+        <div class="lang-item" role="button">
+          <img src="https://d2yjqys1j7uhg1.cloudfront.net/images/language-icons/logos/cpp.svg" alt="" class="item-icon">
+          <h3>C++ Language</h3>
+        </div>
+        <div class="lang-item" role="button">
+          <img src="https://d2yjqys1j7uhg1.cloudfront.net/images/language-icons/logos/java.svg" alt="" class="item-icon">
+          <h3>Java</h3>
+        </div>
+        <div class="lang-item" role="button">
+          <img src="https://d2yjqys1j7uhg1.cloudfront.net/images/language-icons/logos/python-2.svg" alt="" class="item-icon">
+          <h3>Python</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  let myButton = document.getElementById("myButton");
+  document.getElementById('myButton').addEventListener('click', openPopup);
+
+  function openPopup() {
+    document.getElementById('signInPopup').style.display = 'block';
+  }
+
+  function closePopup() {
+    document.getElementById('signInPopup').style.display = 'none';
+  }
+
+  function generateRoomId() {
+    let randomRoomId = Math.floor(10000 + Math.random() * 90000);
+    document.getElementById("roomId").value = randomRoomId;
+  }
+
+  document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+    let roomId = document.getElementById("roomId").value;
+    window.location.href = `${roomId}`;
+  });
+
+  const loginForm = document.getElementById("loginForm");
+  const name = document.getElementById("name");
+
+</script>
+
+</body>
+</html>
